@@ -66,7 +66,7 @@ def test_create_or_promote_creates_one_normalized_active_admin_without_echoing_p
         assert created.exit_code == 0, created.output
         assert promoted.exit_code == 0, promoted.output
         assert created.output == "admin@example.com: created\n"
-        assert promoted.output == "Password: admin@example.com: promoted\n"
+        assert promoted.output == "Password: \nadmin@example.com: promoted\n"
         assert "replacement secure password" not in promoted.output
 
         users = _users_with_email("admin@example.com")
