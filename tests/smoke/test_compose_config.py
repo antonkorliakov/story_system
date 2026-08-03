@@ -60,4 +60,5 @@ def test_rendered_compose_has_healthy_postgres_and_migrating_api() -> None:
     assert api_environment["JWT_SECRET"] == environment["JWT_SECRET"]
 
     command = config["services"]["api"]["command"]
-    assert command.index("alembic upgrade head") < command.index("uvicorn app.main:app")
+    command_text = " ".join(command) if isinstance(command, list) else command
+    assert command_text.index("alembic upgrade head") < command_text.index("uvicorn app.main:app")
