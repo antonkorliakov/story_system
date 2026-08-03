@@ -25,13 +25,13 @@ class Category(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     slug: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), nullable=False, server_default=func.now()
+        DateTime(timezone=True), nullable=False, server_default=func.clock_timestamp()
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
-        server_default=func.now(),
-        onupdate=func.now(),
+        server_default=func.clock_timestamp(),
+        onupdate=func.clock_timestamp(),
     )
 
 
@@ -56,11 +56,11 @@ class Product(Base):
     stock_quantity: Mapped[int] = mapped_column(nullable=False)
     is_published: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), nullable=False, server_default=func.now()
+        DateTime(timezone=True), nullable=False, server_default=func.clock_timestamp()
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
-        server_default=func.now(),
-        onupdate=func.now(),
+        server_default=func.clock_timestamp(),
+        onupdate=func.clock_timestamp(),
     )
