@@ -21,6 +21,44 @@ shop-admin = "app.cli:app"
 [project.optional-dependencies]
 dev = ["httpx>=0.28,<1", "mypy>=1.13,<2", "pytest>=8.3,<9", "pytest-asyncio>=0.24,<1", "pyyaml>=6,<7", "ruff>=0.8,<1"]
 
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+[project]
+name = "ecommerce-api"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "alembic>=1.13,<2",
+  "asyncpg>=0.29,<1",
+  "email-validator>=2.2,<3",
+  "fastapi>=0.115,<1",
+  "pydantic-settings>=2.6,<3",
+  "pyjwt>=2.9,<3",
+  "pwdlib[argon2]>=0.2,<1",
+  "sqlalchemy[asyncio]>=2.0.36,<3",
+  "typer>=0.15,<1",
+  "uvicorn[standard]>=0.32,<1",
+]
+
+[project.scripts]
+shop-admin = "app.cli:app"
+
+[project.optional-dependencies]
+dev = ["httpx>=0.28,<1", "mypy>=1.13,<2", "pytest>=8.3,<9", "pytest-asyncio>=0.24,<1", "pyyaml>=6,<7", "ruff>=0.8,<1"]
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
