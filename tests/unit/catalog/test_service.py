@@ -50,6 +50,9 @@ class InMemoryCatalogRepository:
     async def commit(self) -> None:
         return None
 
+    async def refresh(self, product: Product) -> None:
+        return None
+
 
 class FailingCommitCatalogRepository(InMemoryCatalogRepository):
     def __init__(self, sqlstate: str) -> None:
