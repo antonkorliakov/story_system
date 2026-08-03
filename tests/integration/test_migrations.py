@@ -199,7 +199,11 @@ def test_initial_migration_creates_and_reverses_the_application_schema() -> None
         }
         for table_name, expected_index_values in expected_indexes.items():
             indexes = _indexes(table_name)
-            assert {index["name"]: index["unique"] for index in indexes} == expected_index_values
+            assert {
+                index["name"]: index["unique"]
+                for index in indexes
+                if not index.get("duplicates_constraint")
+            } == expected_index_values
 
         expected_unique_constraints: dict[str, dict[str, tuple[str, ...]]] = {
             "users": {},
