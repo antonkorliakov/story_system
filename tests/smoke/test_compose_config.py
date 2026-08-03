@@ -50,7 +50,9 @@ def test_rendered_compose_has_healthy_postgres_and_migrating_api() -> None:
     assert set(config["services"]) == {"api", "db"}
     assert config["services"]["db"]["image"] == "postgres:16"
     assert "healthcheck" in config["services"]["db"]
-    assert "pg_isready" in config["services"]["db"]["healthcheck"]["test"]
+    assert any(
+        "pg_isready" in command for command in config["services"]["db"]["healthcheck"]["test"]
+    )
     assert config["services"]["api"]["depends_on"]["db"]["condition"] == "service_healthy"
 
     api_environment = config["services"]["api"]["environment"]
