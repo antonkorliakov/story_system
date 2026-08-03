@@ -6,6 +6,7 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.pool import NullPool
 
 from app.core.database import Base, get_db
 from app.core.security import create_access_token, hash_password
@@ -29,7 +30,7 @@ def _get_test_database_url() -> str:
     return database_url
 
 
-test_engine = create_async_engine(_get_test_database_url(), pool_pre_ping=True)
+test_engine = create_async_engine(_get_test_database_url(), poolclass=NullPool)
 test_session_factory = async_sessionmaker(test_engine, expire_on_commit=False)
 
 
