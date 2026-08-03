@@ -1,5 +1,7 @@
 from uuid import UUID
 
+from sqlalchemy.orm.attributes import set_committed_value
+
 from app.cart.models import Cart, CartItem
 from app.cart.repository import CartRepository
 from app.catalog.models import Product
@@ -17,7 +19,7 @@ class CartService:
         items = list(await self._carts.list_items(cart.id))
         for item in items:
             item.product = await self._require_published_product(item.product_id)
-        cart.items = items
+        set_committed_value(cart, "items", items)
         await self._carts.commit()
         return cart
 
