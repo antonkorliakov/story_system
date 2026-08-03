@@ -90,3 +90,6 @@ class CatalogRepository:
 
     async def commit(self) -> None:
         await self._session.commit()
+
+    async def refresh(self, product: Product) -> None:
+        await self._session.refresh(product)
