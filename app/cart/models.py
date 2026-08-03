@@ -17,13 +17,13 @@ class Cart(Base):
         Uuid(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
     )
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), nullable=False, server_default=func.now()
+        DateTime(timezone=True), nullable=False, server_default=func.clock_timestamp()
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
-        server_default=func.now(),
-        onupdate=func.now(),
+        server_default=func.clock_timestamp(),
+        onupdate=func.clock_timestamp(),
     )
     items: Mapped[list["CartItem"]] = relationship(
         back_populates="cart", cascade="all, delete-orphan", lazy="selectin"
@@ -49,13 +49,13 @@ class CartItem(Base):
     )
     quantity: Mapped[int] = mapped_column(nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), nullable=False, server_default=func.now()
+        DateTime(timezone=True), nullable=False, server_default=func.clock_timestamp()
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
-        server_default=func.now(),
-        onupdate=func.now(),
+        server_default=func.clock_timestamp(),
+        onupdate=func.clock_timestamp(),
     )
     cart: Mapped[Cart] = relationship(back_populates="items")
     product: Mapped[Product] = relationship(lazy="selectin")
