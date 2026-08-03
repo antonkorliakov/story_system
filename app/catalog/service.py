@@ -80,6 +80,7 @@ class CatalogService:
             if _is_unique_violation(error):
                 raise _product_slug_conflict() from error
             raise
+        await self._catalog.refresh(product)
         return product
 
     async def update_product(
@@ -118,12 +119,14 @@ class CatalogService:
             if _is_unique_violation(error):
                 raise _product_slug_conflict() from error
             raise
+        await self._catalog.refresh(product)
         return product
 
     async def unpublish_product(self, product_id: UUID) -> Product:
         product = await self._require_product(product_id)
         product.is_published = False
         await self._catalog.commit()
+        await self._catalog.refresh(product)
         return product
 
     async def _require_category(self, category_id: UUID) -> Category:
